@@ -1,0 +1,8 @@
+console.log("Hello");
+//node .\server.js
+console.log(process.version);
+console.log(process.cwd());
+
+//파일 출력
+const fs = require('fs'); //file system 라이브러리
+console.log(fs.readFileSync(__filename, "utf-8"));
