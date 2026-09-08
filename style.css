@@ -1,0 +1,202 @@
+:root {
+    --ink: #1d1d1f;
+    --muted: #86868b;
+    --blue: #0071e3;
+    --blue-hover: #0077ed;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: #f5f5f7;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 28px 18px;
+    background: radial-gradient(circle at 12% 8%, rgba(0, 113, 227, .14), transparent 30%), radial-gradient(circle at 92% 90%, rgba(175, 82, 222, .12), transparent 28%), #f5f5f7;
+}
+
+#app {
+    width: min(100%, 820px);
+    min-height: calc(100vh - 56px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 6px 20px;
+}
+
+header::before {
+    content: "";
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #4bb0ff, #0071e3 58%, #004b9b);
+    box-shadow: 0 9px 20px rgba(0, 113, 227, .25);
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(25px, 4vw, 33px);
+    font-weight: 700;
+    letter-spacing: -.05em;
+}
+
+#messages {
+    flex: 1;
+    min-height: 460px;
+    max-height: calc(100vh - 190px);
+    margin: 0;
+    padding: 28px 24px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, .85);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, .68);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .08), inset 0 1px 0 rgba(255, 255, 255, .95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    scrollbar-width: thin;
+    scrollbar-color: #c7c7cc transparent;
+}
+
+#messages:empty::before {
+    content: "";
+    display: block;
+    min-height: 400px;
+}
+
+#messages li {
+    width: fit-content;
+    max-width: min(76%, 540px);
+    margin: 10px 0;
+    padding: 12px 16px;
+    border-radius: 20px 20px 20px 6px;
+    color: var(--ink);
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#messages li.me,
+#messages li.sent,
+#messages li[data-own="true"] {
+    margin-left: auto;
+    border-radius: 20px 20px 6px 20px;
+    color: #fff;
+    background: var(--blue);
+}
+
+#chat-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .8);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .09);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+#chat-input {
+    min-width: 0;
+    flex: 1;
+    height: 46px;
+    padding: 0 14px;
+    border: 0;
+    outline: 0;
+    color: var(--ink);
+    background: transparent;
+    font: inherit;
+    font-size: 15px;
+}
+
+#chat-input::placeholder {
+    color: #a1a1a6;
+}
+
+#chat-input:focus-visible {
+    border-radius: 10px;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, .16);
+}
+
+#chat-form button {
+    height: 46px;
+    padding: 0 21px;
+    border: 0;
+    border-radius: 14px;
+    color: #fff;
+    background: var(--blue);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+#chat-form button:hover {
+    background: var(--blue-hover);
+    box-shadow: 0 7px 16px rgba(0, 113, 227, .27);
+    transform: translateY(-1px);
+}
+
+#chat-form button:active {
+    transform: scale(.97);
+}
+
+#chat-form button:focus-visible {
+    outline: 3px solid rgba(0, 113, 227, .28);
+    outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+    body {
+        padding: 14px 10px;
+    }
+
+    #app {
+        min-height: calc(100vh - 28px);
+    }
+
+    header {
+        padding: 2px 4px 14px;
+    }
+
+    #messages {
+        min-height: 0;
+        max-height: calc(100vh - 145px);
+        padding: 20px 15px;
+        border-radius: 22px;
+    }
+
+    #messages:empty::before {
+        min-height: 300px;
+    }
+
+    #messages li {
+        max-width: 88%;
+    }
+
+    #chat-form {
+        margin-top: 10px;
+    }
+
+    #chat-form button {
+        padding: 0 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #chat-form button {
+        transition: none;
+    }
+}
