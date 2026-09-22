@@ -20,3 +20,13 @@ chatForm.addEventListener("submit", (event) => {
     chatInput.value = "";
     chatInput.focus();
 });
+
+//-------------WevSocket----------------//
+const ws = new WebSocket(`ws://${location.host}`);//서버와 연결
+//ws.on("open", () => {});
+ws.onopen = () => {
+    console.log("서버 연결");
+};
+ws.onclose = () => {
+    console.log("서버 연결 해제");
+};

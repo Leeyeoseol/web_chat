@@ -1,0 +1,6 @@
+127.0.0.1 == localhost
+126.0.0.1:3000 == 127.0.0.1:3000/index.html
+HTTP == HyperTextTrasferProtocol
+clinet 요청 <-> server 응답
+
+WebSocket
