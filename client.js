@@ -3,30 +3,31 @@ const chatInput = document.getElementById("chat-input");
 const messages = document.getElementById("messages");
 
 function addMessage(messageText) {
-    const message = document.createElement("li");
-    message.textContent = messageText;
-    messages.appendChild(message);
+  const message = document.createElement("li");
+  message.textContent = messageText;
+  messages.appendChild(message);
 }
 
 chatForm.addEventListener("submit", (event) => {
-    event.preventDefault();//화면 깜박거리는 기본 동작 막음
+  event.preventDefault(); //화면 깜박거리는 기본 동작 막음
 
-    const messageText = chatInput.value.trim();//앞 뒤 여백 자르기
+  const messageText = chatInput.value.trim(); //앞 뒤 여백 자르기
 
-    if (!messageText) return;//메세지 없으면 그냥 return
+  if (!messageText) return; //메세지 없으면 그냥 return
 
-    addMessage(messageText);
+  ws.send(messageText); //서버로 message 날림
+  addMessage(messageText);
 
-    chatInput.value = "";
-    chatInput.focus();
+  chatInput.value = "";
+  chatInput.focus();
 });
 
 //-------------WevSocket----------------//
-const ws = new WebSocket(`ws://${location.host}`);//서버와 연결
+const ws = new WebSocket(`ws://${location.host}`); //서버와 연결
 //ws.on("open", () => {});
 ws.onopen = () => {
-    console.log("서버 연결");
+  console.log("서버 연결");
 };
 ws.onclose = () => {
-    console.log("서버 연결 해제");
+  console.log("서버 연결 해제");
 };

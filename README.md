@@ -30,7 +30,10 @@
       - webSocketServer, webSocket
       - server.js
         - wss.on("connection", () => {});
-        - ws.on("close", () => {});
+          - ws.on("message", (data) => {});
+          - ws.on("close", () => {});
       - client.js
+        - chatForm.addEventListener("submit", ...)
+          - ws.send(text);
         - ws.onopen = () => {};
         - ws.onclose = () => {};
