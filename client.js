@@ -15,7 +15,8 @@ chatForm.addEventListener("submit", (event) => {
 
   if (!messageText) return; //메세지 없으면 그냥 return
 
-  ws.send(messageText); //서버로 message 날림
+  //서버로 message 날림
+  ws.send(JSON.stringify({ type: "chat", text: messageText })); //json -> string
   addMessage(messageText);
 
   chatInput.value = "";
