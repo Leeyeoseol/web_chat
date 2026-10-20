@@ -17,7 +17,7 @@ chatForm.addEventListener("submit", (event) => {
 
   //서버로 message 날림
   ws.send(JSON.stringify({ type: "chat", text: messageText })); //json -> string
-  addMessage(messageText);
+  //addMessage(messageText); //Message 보이게
 
   chatInput.value = "";
   chatInput.focus();
@@ -28,6 +28,19 @@ const ws = new WebSocket(`ws://${location.host}`); //서버와 연결
 //ws.on("open", () => {});
 ws.onopen = () => {
   console.log("서버 연결");
+};
+ws.onmessage = (event) => {
+  //string ->  json
+  const data = event.data;
+  const json = JSON.parse(data);
+  //type: chat -> 채팅창에 추가(li)
+  switch (json.type) {
+    case "chat":
+      //console.log(json.text);
+      //화면에 json.test를 보여주도록
+      addMessage(json.text);
+      break;
+  }
 };
 ws.onclose = () => {
   console.log("서버 연결 해제");
