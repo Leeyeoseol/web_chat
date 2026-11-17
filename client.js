@@ -1,11 +1,24 @@
 const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
 const messages = document.getElementById("messages");
+chatInput.focus(); //메세지 입력창에 바로 포커싱
 
-function addMessage(messageText) {
-  const message = document.createElement("li");
-  message.textContent = messageText;
-  messages.appendChild(message);
+function addMessage(sendNickname, message) {
+  const li = document.createElement("li");
+  //내가보낸거 아니면
+  if (sendNickname !== nickname) {
+    const nicknameDiv = document.createElement("div");
+    nicknameDiv.classList.add("nickname");
+    nicknameDiv.textContent = sendNickname;
+
+    li.appendChild(nicknameDiv);
+    li.append(message);
+  } else {
+    li.classList.add("user");
+    li.textContent = message;
+  }
+
+  messages.appendChild(li);
 }
 
 chatForm.addEventListener("submit", (event) => {
@@ -25,9 +38,12 @@ chatForm.addEventListener("submit", (event) => {
 
 //-------------WevSocket----------------//
 const ws = new WebSocket(`ws://${location.host}`); //서버와 연결
+const nickname = prompt("당신의 닉네임을 입력하세요").trim() || "익명";
+
 //ws.on("open", () => {});
 ws.onopen = () => {
   console.log("서버 연결");
+  ws.send(JSON.stringify({ type: "join", text: nickname })); //server에 nickname 보내기
 };
 ws.onmessage = (event) => {
   //string ->  json
@@ -38,7 +54,9 @@ ws.onmessage = (event) => {
     case "chat":
       //console.log(json.text);
       //화면에 json.test를 보여주도록
-      addMessage(json.text);
+      console.log(json.text);
+      console.log(json.nickname);
+      addMessage(json.nickname, json.text);
       break;
   }
 };

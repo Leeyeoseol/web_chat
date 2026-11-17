@@ -50,3 +50,19 @@
    - client.js
      - message 송신 -> Server: send() when submit
      - message 수신(onmessage()) -> adMessage()
+   3. nickname
+   - client A -> Server -> 모든 client
+   - client B -> Server -> 모든 client
+   - server.js
+     - 연결된 client들 목록
+       - wss.on("connection",) 할때, client 추가
+       - ws.on("message",) 그리고 type "join"이면 users {ws, {nickname}}
+       - ws.on("close",) 할때, client 삭제, users에서 ws 삭제
+     - message 수신 -> message 객체 -> broadcast()
+       - broadcastMessage = {type, text, id, timestamp nickname}
+       - broadcast() = client 목록에서 WebSocket.OPEN인 client에세 send()
+   - client.js
+     - nickname 설정하기
+     - message 송신 -> Server: send({"join" : nickname})
+     - message 송신 -> Server: send() when submit
+     - message 수신(onmessage()) -> adMessage(nickname, text)
